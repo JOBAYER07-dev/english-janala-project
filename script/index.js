@@ -1,12 +1,13 @@
-
-// eta dynamic vabe displayWordDetails function er modde synonyms gula render korbe.
-const createElement = (arr) => {
-  const htmlElement = arr.map(item=>`<span class="btn btn-outline">${item}</span>`)
+// [1] Entry point: loadData() theke shob kichu shuru hoy -> showLessons() ke call kore
+const createElement = arr => {
+  const htmlElement = arr.map(
+    item => `<span class="btn btn-outline">${item}</span>`,
+  );
   return htmlElement.join(' ');
-}
+};
 
-// spinner fucntion
-const toggleSpinner = (isLoading) => {
+// [5] toggleSpinner() -> loadwords() & displayWords() theke call hoy
+const toggleSpinner = isLoading => {
   if (isLoading === true) {
     document.getElementById('spinner').classList.remove('hidden');
     document.getElementById('word-container').classList.add('hidden');
@@ -14,46 +15,45 @@ const toggleSpinner = (isLoading) => {
     document.getElementById('word-container').classList.remove('hidden');
     document.getElementById('spinner').classList.add('hidden');
   }
-}
+};
 
-
+// [1] Shob kichu er shuru ekhane, API theke data fetch kore showLessons() ke pathay
 const loadData = () => {
   fetch('https://openapi.programming-hero.com/api/levels/all')
     .then(res => res.json())
     .then(json => showLessons(json.data));
 };
 
-// remove active class from all lesson btn 
+// [4] loadwords() er vitore call hoy, active class remove kore
 const removeActiveClass = () => {
   const allLessonsBtn = document.querySelectorAll('.lesson-btn');
   allLessonsBtn.forEach(btn => btn.classList.remove('btn-active'));
-}
+};
 
-const loadwords = (id) => {
+// [3] Lesson button click korle call hoy -> toggleSpinner(), removeActiveClass(), displayWords() ke call kore
+const loadwords = id => {
   toggleSpinner(true);
   const url = `https://openapi.programming-hero.com/api/level/${id}`;
   fetch(url)
-    .then((res) => res.json())
-    .then((data) => {
-      removeActiveClass(); // remove active class from all lesson btn
+    .then(res => res.json())
+    .then(data => {
+      removeActiveClass();
       const clickBtn = document.getElementById(`lesson-${id}`);
-      // console.log(clickBtn)
-      clickBtn.classList.add('btn-active'); // add active class to the clicked lesson btn
+      clickBtn.classList.add('btn-active');
       displayWords(data.data);
     });
-}
+};
 
-const loadWordDetails = async(id) => {
+// [6] Info button click korle call hoy -> displayWordDetails() ke call kore
+const loadWordDetails = async id => {
   const url = `https://openapi.programming-hero.com/api/word/${id}`;
-  // console.log(url);
   const res = await fetch(url);
   const details = await res.json();
-  // console.log(details.data);
   displayWordDetails(details.data);
-}
-const displayWordDetails = (words) => {
-  
-  // console.log(words)
+};
+
+// [8] loadWordDetails() er por call hoy -> createElement() ke call kore, modal open kore
+const displayWordDetails = words => {
   const detailsContainer = document.getElementById('detais-container');
   detailsContainer.innerHTML = `<div>
         <h2 class="text-2xl font-bold">${words.word}(<i class="fa-solid fa-microphone-lines"></i>: ${words.pronunciation})</h2>
@@ -77,9 +77,10 @@ const displayWordDetails = (words) => {
   
   `;
   document.getElementById('my_modal_5').showModal();
-}
+};
 
-const displayWords = (words) => {
+// [5] loadwords() er por call hoy -> toggleSpinner() band kore, card render kore
+const displayWords = words => {
   const wordContainer = document.getElementById('word-container');
   wordContainer.innerHTML = '';
   if (words.length === 0) {
@@ -94,7 +95,6 @@ const displayWords = (words) => {
     return;
   }
   words.forEach(word => {
-    // console.log(word)
     const createCard = document.createElement('div');
     createCard.innerHTML = `
     <div class="bg-white rounded-xl shadow-sm text-center py-10 px-5 space-y-5">
@@ -110,10 +110,11 @@ const displayWords = (words) => {
     wordContainer.appendChild(createCard);
   });
   toggleSpinner(false);
-}
+};
 
-const showLessons = (lessons) => {
-  const levelContainer = document.getElementById('level-container')
+// [2] loadData() er por call hoy, lesson buttons render kore
+const showLessons = lessons => {
+  const levelContainer = document.getElementById('level-container');
   levelContainer.innerHTML = '';
 
   for (const lesson of lessons) {
@@ -123,6 +124,6 @@ const showLessons = (lessons) => {
     `;
     levelContainer.appendChild(createDiv);
   }
-} 
+};
 
 loadData();
