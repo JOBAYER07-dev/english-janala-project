@@ -89,6 +89,45 @@
       <img src="./assets/hero-student.png" alt="">
     </div>
    </section>
+<!-- learn section start from here  -->
+ <section>
+  <h2 class="text-4xl font-bold mb-8 text-center"><span class="text-sky-400">Let's</span> learn vocabulary</h2>
+  <div id="level-container" class="flex flex-wrap justify-center gap-5">
+
+  </div>
+ </section>
+
+<section id="spinner"  class="flex justify-center items-center py-10 hidden">
+  <span class="loading loading-bars loading-xl"></span>
+</section>
+
+<!-- word list section start from here -->
+ <section id="word-container" class="bg-gray-100 w-11/12 mx-auto p-10 my-10 grid grid-cols-2 md:grid-cols-3 gap-5">
+<div class="space-y-6 col-span-full text-center">
+  
+  <p class="bangla text-xl text-gray-500">আপনি এখনো কোন Lesson Select করেন নি</p>
+  <h2 class="bangla text-4xl font-bold">একটি Lesson Select করুন।</h2>
+</div>
+ </section>
+
+<!-- Open the modal using ID.showModal() method -->
+<!-- <button class="btn" onclick="my_modal_5.showModal()">open modal</button> -->
+<dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
+  <div class="modal-box">
+    <div id="detais-container" class="space-y-5">
+      
+    </div>
+    <div class="modal-action">
+      <form method="dialog">
+        <!-- if there is a button in form, it will close the modal -->
+        <button class="btn">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>
+
+
+ <script src="./script/index.js"></script>
 </body>
 
 </html>
