@@ -6,6 +6,13 @@ const createElement = arr => {
   return htmlElement.join(' ');
 };
 
+//  speak function
+function pronounceWord(word) {
+  const utterance = new SpeechSynthesisUtterance(word);
+  utterance.lang = 'en-EN'; // English
+  window.speechSynthesis.speak(utterance);
+}
+
 // [5] toggleSpinner() -> loadwords() & displayWords() theke call hoy
 const toggleSpinner = isLoading => {
   if (isLoading === true) {
@@ -103,7 +110,7 @@ const displayWords = words => {
   <h2 class="bangla text-2xl font-medium">"${word.meaning ? word.meaning : 'শিগ্রই যুক্ত করা হবে'} / ${word.pronunciation ? word.pronunciation : 'শিগ্রই যুক্ত করা হবে'}"</h2>
   <div class="flex justify-between items-center">
     <button onclick="loadWordDetails(${word.id})" class="btn [#1A91FF10] hover:bg-[#1A91FF80]"><i class="fa-solid fa-circle-info"></i></button>
-    <button class="btn [#1A91FF10] hover:bg-[#1A91FF80]"><i class="fa-solid fa-volume-high"></i></button>
+    <button onclick="pronounceWord('${word.word}')" class="btn [#1A91FF10] hover:bg-[#1A91FF80]"><i class="fa-solid fa-volume-high"></i></button>
   </div>
 </div>
     `;
@@ -131,7 +138,7 @@ loadData();
 // search start from here
 document.getElementById('btn-search').addEventListener('click', () => {
   removeActiveClass();
-  
+
   const searchInput = document.getElementById('input-search');
   const searchValue = searchInput.value.trim().toLowerCase();
   console.log(searchValue);
